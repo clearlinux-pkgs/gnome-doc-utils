@@ -4,7 +4,7 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 2
+Release  : 3
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Summary  : Tool for translating XML documents
