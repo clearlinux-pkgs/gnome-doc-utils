@@ -4,10 +4,10 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 3
+Release  : 4
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
-Summary  : Tool for translating XML documents
+Summary  : GNOME Documentation Utilities
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: gnome-doc-utils-bin
@@ -89,7 +89,11 @@ python components for the gnome-doc-utils package.
 %setup -q -n gnome-doc-utils-0.20.10
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
+export SOURCE_DATE_EPOCH=1503089728
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -97,10 +101,11 @@ make V=1  %{?_smp_mflags}
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1503089728
 rm -rf %{buildroot}
 %make_install
 %find_lang gnome-doc-utils
@@ -280,7 +285,8 @@ rm -rf %{buildroot}
 
 %files dev
 %defattr(-,root,root,-)
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/pkgconfig/gnome-doc-utils.pc
+/usr/lib64/pkgconfig/xml2po.pc
 /usr/share/aclocal/*.m4
 
 %files doc
@@ -289,8 +295,8 @@ rm -rf %{buildroot}
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*
 
-%files locales -f gnome-doc-utils.lang 
+%files locales -f gnome-doc-utils.lang
 %defattr(-,root,root,-)
 
