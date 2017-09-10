@@ -4,14 +4,14 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 4
+Release  : 5
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Summary  : GNOME Documentation Utilities
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: gnome-doc-utils-bin
-Requires: gnome-doc-utils-python
+Requires: gnome-doc-utils-legacypython
 Requires: gnome-doc-utils-data
 Requires: gnome-doc-utils-locales
 Requires: gnome-doc-utils-doc
@@ -69,20 +69,20 @@ Group: Documentation
 doc components for the gnome-doc-utils package.
 
 
+%package legacypython
+Summary: legacypython components for the gnome-doc-utils package.
+Group: Default
+
+%description legacypython
+legacypython components for the gnome-doc-utils package.
+
+
 %package locales
 Summary: locales components for the gnome-doc-utils package.
 Group: Default
 
 %description locales
 locales components for the gnome-doc-utils package.
-
-
-%package python
-Summary: python components for the gnome-doc-utils package.
-Group: Default
-
-%description python
-python components for the gnome-doc-utils package.
 
 
 %prep
@@ -93,7 +93,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1503089728
+export SOURCE_DATE_EPOCH=1505003058
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -105,7 +105,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1503089728
+export SOURCE_DATE_EPOCH=1505003058
 rm -rf %{buildroot}
 %make_install
 %find_lang gnome-doc-utils
@@ -293,7 +293,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %doc /usr/share/man/man1/*
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
 
