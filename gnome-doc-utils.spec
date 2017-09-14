@@ -4,7 +4,7 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 5
+Release  : 6
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Summary  : GNOME Documentation Utilities
@@ -93,7 +93,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505003058
+export SOURCE_DATE_EPOCH=1505364628
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -105,7 +105,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1505003058
+export SOURCE_DATE_EPOCH=1505364628
 rm -rf %{buildroot}
 %make_install
 %find_lang gnome-doc-utils
