@@ -4,7 +4,7 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 8
+Release  : 9
 URL      : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Summary  : GNOME Documentation Utilities
