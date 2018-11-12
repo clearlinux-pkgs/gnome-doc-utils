@@ -4,18 +4,19 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 11
+Release  : 12
 URL      : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Summary  : GNOME Documentation Utilities
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
-Requires: gnome-doc-utils-bin
-Requires: gnome-doc-utils-legacypython
-Requires: gnome-doc-utils-data
-Requires: gnome-doc-utils-locales
-Requires: gnome-doc-utils-doc
-Requires: gnome-doc-utils-python
+Requires: gnome-doc-utils-bin = %{version}-%{release}
+Requires: gnome-doc-utils-data = %{version}-%{release}
+Requires: gnome-doc-utils-license = %{version}-%{release}
+Requires: gnome-doc-utils-locales = %{version}-%{release}
+Requires: gnome-doc-utils-man = %{version}-%{release}
+Requires: gnome-doc-utils-python = %{version}-%{release}
+BuildRequires : buildreq-gnome
 BuildRequires : docbook-xml
 BuildRequires : gettext
 BuildRequires : intltool
@@ -24,6 +25,7 @@ BuildRequires : libxml2-dev
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : pkgconfig(libxslt)
+Patch1: legacypython.patch
 
 %description
 ABOUT
@@ -37,7 +39,9 @@ Gnome 2.8, Yelp will require gnome-doc-utils for the XSLT.
 %package bin
 Summary: bin components for the gnome-doc-utils package.
 Group: Binaries
-Requires: gnome-doc-utils-data
+Requires: gnome-doc-utils-data = %{version}-%{release}
+Requires: gnome-doc-utils-license = %{version}-%{release}
+Requires: gnome-doc-utils-man = %{version}-%{release}
 
 %description bin
 bin components for the gnome-doc-utils package.
@@ -54,20 +58,12 @@ data components for the gnome-doc-utils package.
 %package dev
 Summary: dev components for the gnome-doc-utils package.
 Group: Development
-Requires: gnome-doc-utils-bin
-Requires: gnome-doc-utils-data
-Provides: gnome-doc-utils-devel
+Requires: gnome-doc-utils-bin = %{version}-%{release}
+Requires: gnome-doc-utils-data = %{version}-%{release}
+Provides: gnome-doc-utils-devel = %{version}-%{release}
 
 %description dev
 dev components for the gnome-doc-utils package.
-
-
-%package doc
-Summary: doc components for the gnome-doc-utils package.
-Group: Documentation
-
-%description doc
-doc components for the gnome-doc-utils package.
 
 
 %package legacypython
@@ -79,6 +75,14 @@ Requires: python-core
 legacypython components for the gnome-doc-utils package.
 
 
+%package license
+Summary: license components for the gnome-doc-utils package.
+Group: Default
+
+%description license
+license components for the gnome-doc-utils package.
+
+
 %package locales
 Summary: locales components for the gnome-doc-utils package.
 Group: Default
@@ -87,10 +91,17 @@ Group: Default
 locales components for the gnome-doc-utils package.
 
 
+%package man
+Summary: man components for the gnome-doc-utils package.
+Group: Default
+
+%description man
+man components for the gnome-doc-utils package.
+
+
 %package python
 Summary: python components for the gnome-doc-utils package.
 Group: Default
-Requires: gnome-doc-utils-legacypython
 
 %description python
 python components for the gnome-doc-utils package.
@@ -98,15 +109,16 @@ python components for the gnome-doc-utils package.
 
 %prep
 %setup -q -n gnome-doc-utils-0.20.10
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1508274603
-%configure --disable-static
-make V=1  %{?_smp_mflags}
+export SOURCE_DATE_EPOCH=1541996322
+%configure --disable-static PYTHON=/usr/bin/python2
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -116,8 +128,13 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1508274603
+export SOURCE_DATE_EPOCH=1541996322
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/gnome-doc-utils
+cp COPYING %{buildroot}/usr/share/package-licenses/gnome-doc-utils/COPYING
+cp COPYING.GPL %{buildroot}/usr/share/package-licenses/gnome-doc-utils/COPYING.GPL
+cp COPYING.LGPL %{buildroot}/usr/share/package-licenses/gnome-doc-utils/COPYING.LGPL
+cp xml2po/COPYING %{buildroot}/usr/share/package-licenses/gnome-doc-utils/xml2po_COPYING
 %make_install
 %find_lang gnome-doc-utils
 
@@ -300,13 +317,20 @@ rm -rf %{buildroot}
 /usr/lib64/pkgconfig/xml2po.pc
 /usr/share/aclocal/*.m4
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
-
 %files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gnome-doc-utils/COPYING
+/usr/share/package-licenses/gnome-doc-utils/COPYING.GPL
+/usr/share/package-licenses/gnome-doc-utils/COPYING.LGPL
+/usr/share/package-licenses/gnome-doc-utils/xml2po_COPYING
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/xml2po.1
 
 %files python
 %defattr(-,root,root,-)
