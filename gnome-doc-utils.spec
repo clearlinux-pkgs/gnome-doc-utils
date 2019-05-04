@@ -4,10 +4,10 @@
 #
 Name     : gnome-doc-utils
 Version  : 0.20.10
-Release  : 13
+Release  : 14
 URL      : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
 Source0  : https://download.gnome.org/sources/gnome-doc-utils/0.20/gnome-doc-utils-0.20.10.tar.xz
-Summary  : GNOME Documentation Utilities
+Summary  : Documentation utilities for Gnome
 Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.1
 Requires: gnome-doc-utils-bin = %{version}-%{release}
@@ -41,7 +41,6 @@ Summary: bin components for the gnome-doc-utils package.
 Group: Binaries
 Requires: gnome-doc-utils-data = %{version}-%{release}
 Requires: gnome-doc-utils-license = %{version}-%{release}
-Requires: gnome-doc-utils-man = %{version}-%{release}
 
 %description bin
 bin components for the gnome-doc-utils package.
@@ -61,6 +60,7 @@ Group: Development
 Requires: gnome-doc-utils-bin = %{version}-%{release}
 Requires: gnome-doc-utils-data = %{version}-%{release}
 Provides: gnome-doc-utils-devel = %{version}-%{release}
+Requires: gnome-doc-utils = %{version}-%{release}
 
 %description dev
 dev components for the gnome-doc-utils package.
@@ -116,7 +116,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541996322
+export SOURCE_DATE_EPOCH=1556987444
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static PYTHON=/usr/bin/python2
 make  %{?_smp_mflags}
 
@@ -128,7 +135,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1541996322
+export SOURCE_DATE_EPOCH=1556987444
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gnome-doc-utils
 cp COPYING %{buildroot}/usr/share/package-licenses/gnome-doc-utils/COPYING
